@@ -1,9 +1,12 @@
 package com.NotasPersonales.Notas_Personales.Repositories;
 
+import com.NotasPersonales.Notas_Personales.Entities.Cuaderno;
 import com.NotasPersonales.Notas_Personales.Entities.Nota;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.UUID;
 
 public interface NotaRepository extends BaseRepository<Nota, Long>{
-    Optional<Nota> findByCuaderno (Long cuadernoId);
+    List<Nota> findByCuaderno_PublicId (UUID publicId);
+    List<Nota> findByCuaderno (Cuaderno cuaderno);
 }

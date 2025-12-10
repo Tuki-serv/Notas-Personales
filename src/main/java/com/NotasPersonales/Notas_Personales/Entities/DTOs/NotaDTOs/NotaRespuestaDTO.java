@@ -1,7 +1,9 @@
 package com.NotasPersonales.Notas_Personales.Entities.DTOs.NotaDTOs;
 
+import java.util.UUID;
+
 public record NotaRespuestaDTO(
-        Long id,
+        UUID id,
         String titulo,
         String contenido
 ) {
