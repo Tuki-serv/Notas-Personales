@@ -113,12 +113,6 @@ public abstract class BaseEntity {
     private Long version;
 
     /**
-     * Indicador de estado para activar/desactivar la entidad.
-     * No se utiliza para "soft delete".
-     */
-    protected Boolean activo = true;
-
-    /**
      * Indicador de "soft delete". Permite marcar una entidad como
      * eliminada sin borrarla físicamente de la base de datos.
      */

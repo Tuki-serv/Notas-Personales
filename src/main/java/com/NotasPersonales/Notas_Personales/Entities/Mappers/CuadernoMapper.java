@@ -16,7 +16,7 @@ public class CuadernoMapper implements BaseMapper <Cuaderno, CuadernoPostDTO, Cu
 
     @Override
     public CuadernoRespuestaDTO entityToDTO(Cuaderno cuaderno) {
-        return new CuadernoRespuestaDTO(cuaderno.getPublicId(),cuaderno.getNombre(), cuaderno.getDescripcion());
+        return new CuadernoRespuestaDTO(cuaderno.getPublicId(),cuaderno.getNombre(), cuaderno.getDescripcion(),cuaderno.getFechaCreacion(),cuaderno.getFechaUltimaModificacion());
     }
 
     @Override

@@ -8,17 +8,26 @@ import com.NotasPersonales.Notas_Personales.Entities.Nota;
 public class NotaMapper implements BaseMapper <Nota, NotaPostDTO, NotaUpdateDTO, NotaRespuestaDTO>{
 
     @Override
-    public Nota dtoToEntity(NotaPostDTO notaPostDTO) {
-        return null;
+    public Nota dtoToEntity(NotaPostDTO dto) {
+        return Nota.builder()
+                .titulo(dto.titulo())
+                .contenido(dto.contenido())
+                .build();
     }
 
     @Override
     public NotaRespuestaDTO entityToDTO(Nota nota) {
-        return null;
+        return new NotaRespuestaDTO(nota.getPublicId(), nota.getTitulo(), nota.getContenido(), nota.getFechaCreacion(), nota.getFechaUltimaModificacion());
     }
 
     @Override
-    public void actulizarEntidad(Nota nota, NotaUpdateDTO notaUpdateDTO) {
+    public void actulizarEntidad(Nota nota, NotaUpdateDTO dto) {
+        if (dto.titulo() != null && !dto.titulo().isBlank() && !dto.titulo().equals(nota.getTitulo())){
+            nota.setTitulo(dto.titulo());
+        }
 
+        if (dto.contenido() != null && !dto.contenido().isBlank() && !dto.contenido().equals(nota.getContenido())){
+            nota.setContenido(dto.contenido());
+        }
     }
 }

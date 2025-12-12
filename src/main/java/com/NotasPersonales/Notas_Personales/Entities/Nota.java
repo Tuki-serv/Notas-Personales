@@ -6,6 +6,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Column;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @AllArgsConstructor
@@ -13,6 +15,8 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE nota SET eliminado = true WHERE id = ?")
+@SQLRestriction("eliminado = false")
 public class Nota extends BaseEntity{
     private String titulo;
     @Lob

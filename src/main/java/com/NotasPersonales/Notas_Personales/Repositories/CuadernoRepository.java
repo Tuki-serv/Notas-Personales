@@ -6,7 +6,10 @@ import com.NotasPersonales.Notas_Personales.Entities.Usuario;
 import java.util.List;
 import java.util.UUID;
 
-public interface CuadernoRepository extends BaseRepository<Cuaderno, Long>{
-    List<Cuaderno> findByUsuario_PublicId(UUID publicId);
-    List<Cuaderno> findByUsuario(Usuario usuario);
+public interface CuadernoRepository extends BaseRepository<Cuaderno>{
+    List<Cuaderno> findByUsuario_PublicIdOrderByIdAsc(UUID publicId);
+
+    List<Cuaderno> findByUsuario_PublicIdAndEliminadoOrderByIdAsc(UUID publicID, Boolean eliminado);
+
+    List<Cuaderno> findByUsuarioOrderByIdAsc(Usuario usuario);
 }
