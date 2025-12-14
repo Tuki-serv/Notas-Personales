@@ -7,7 +7,7 @@ public interface BaseService <E,PostDTO, UpdateDTO, RespuestaDTO> {
     List<RespuestaDTO> listarTodos();
     List<RespuestaDTO> listarPorEstado(Boolean eliminado);
     RespuestaDTO crear(PostDTO dto);
-    RespuestaDTO editar(UUID publicId, UpdateDTO dto);
-    RespuestaDTO eliminar(UUID publicID);
+    RespuestaDTO editar(E entidad, UpdateDTO dto);
+    void eliminar(UUID publicID);
     void reactivar(UUID publicID);
 }

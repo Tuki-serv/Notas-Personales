@@ -7,20 +7,19 @@ import com.NotasPersonales.Notas_Personales.Services.InterfacesServicios.BaseSer
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
 
-public  class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, RespuestaDTO> implements BaseService<E,PostDTO, UpdateDTO, RespuestaDTO> {
+public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, RespuestaDTO> implements BaseService<E,PostDTO, UpdateDTO, RespuestaDTO> {
 
     @Autowired
     BaseRepository<E> baseRepository;
     @Autowired
     BaseMapper<E,PostDTO, UpdateDTO, RespuestaDTO> baseMapper;
 
-    // -----------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------
 
 
     protected List<RespuestaDTO> mapear(List<E> entidades){
@@ -34,7 +33,7 @@ public  class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, Respuesta
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT, "No encontrado"));
     }
 
-    // -----------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------
 
     protected Boolean filtroEstado (String estado){
         return switch (estado.toLowerCase()) {
@@ -54,7 +53,7 @@ public  class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, Respuesta
         return mapear(baseRepository.findByEliminadoOrderByIdAsc(eliminado));
     }
 
-    // -----------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------
 
     @Override
     public RespuestaDTO crear(PostDTO dto) {
@@ -63,23 +62,22 @@ public  class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, Respuesta
     }
 
     @Override
-    public RespuestaDTO editar(UUID publicId,UpdateDTO dto) {
-        E entidad = buscarEntidadPorPublicId(publicId);
+    public RespuestaDTO editar(E entidad,UpdateDTO dto) {
         baseMapper.actulizarEntidad(entidad,dto);
         return baseMapper.entityToDTO(baseRepository.save(entidad));
     }
 
     @Override
     @Transactional
-    public RespuestaDTO eliminar(UUID publicID) {
+    public void eliminar(UUID publicID) {
         E entidad = buscarEntidadPorPublicId(publicID);
         RespuestaDTO dto = baseMapper.entityToDTO(entidad);
         baseRepository.delete(entidad);
-        return dto;
     }
 
     @Override
     public void reactivar(UUID publicID) {
-
+        E entidad = buscarEntidadPorPublicId(publicID);
+        entidad.setEliminado(false);
     }
 }
