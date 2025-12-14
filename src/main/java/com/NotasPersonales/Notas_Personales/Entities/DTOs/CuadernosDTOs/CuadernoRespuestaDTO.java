@@ -7,6 +7,7 @@ public record CuadernoRespuestaDTO(
         UUID id,
         String nombre,
         String descripcion,
+        UUID usuarioId,
         LocalDateTime fechaCreacion,
         LocalDateTime fechaUltimaModificacion
 ) {

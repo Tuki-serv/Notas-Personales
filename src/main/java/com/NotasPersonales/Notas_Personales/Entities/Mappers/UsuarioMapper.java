@@ -5,7 +5,9 @@ import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioRes
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioUpdateDTO;
 import com.NotasPersonales.Notas_Personales.Entities.Usuario;
 import com.NotasPersonales.Notas_Personales.Utils.PasswordHasher;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UsuarioMapper implements BaseMapper <Usuario, UsuarioPostDTO, UsuarioUpdateDTO, UsuarioRespuestaDTO>{
     @Override
     public Usuario dtoToEntity(UsuarioPostDTO dto) {

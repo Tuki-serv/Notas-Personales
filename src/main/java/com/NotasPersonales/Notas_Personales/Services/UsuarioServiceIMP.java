@@ -4,7 +4,6 @@ import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioLog
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioPostDTO;
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioRespuestaDTO;
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioUpdateDTO;
-import com.NotasPersonales.Notas_Personales.Entities.Mappers.UsuarioMapper;
 import com.NotasPersonales.Notas_Personales.Entities.Usuario;
 import com.NotasPersonales.Notas_Personales.Repositories.UsuarioRepository;
 import com.NotasPersonales.Notas_Personales.Services.InterfacesServicios.UsuarioService;
@@ -12,17 +11,17 @@ import com.NotasPersonales.Notas_Personales.Utils.PasswordHasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class UsuarioServiceIMP extends BaseServiceIMP <Usuario, UsuarioPostDTO, UsuarioUpdateDTO, UsuarioRespuestaDTO> implements UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
-    @Autowired
-    UsuarioMapper usuarioMapper;
 
     @Override
     public ResponseEntity<UsuarioRespuestaDTO> registrarUsuario(UsuarioPostDTO dto) {
@@ -42,7 +41,7 @@ public class UsuarioServiceIMP extends BaseServiceIMP <Usuario, UsuarioPostDTO, 
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales Invalidas");
         }
 
-        return ResponseEntity.ok(usuarioMapper.entityToDTO(usuario));
+        return ResponseEntity.ok(baseMapper.entityToDTO(usuario));
     }
 
     @Override

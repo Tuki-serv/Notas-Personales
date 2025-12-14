@@ -7,6 +7,7 @@ public record NotaRespuestaDTO(
         UUID id,
         String titulo,
         String contenido,
+        UUID cuadernoId,
         LocalDateTime fechaCreacion,
         LocalDateTime fechaUltimaModificacion
 ) {

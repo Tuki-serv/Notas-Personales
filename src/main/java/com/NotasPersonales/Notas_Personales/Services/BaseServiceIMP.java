@@ -1,6 +1,7 @@
 package com.NotasPersonales.Notas_Personales.Services;
 
 import com.NotasPersonales.Notas_Personales.Entities.BaseEntity;
+import com.NotasPersonales.Notas_Personales.Entities.Enums.Estado;
 import com.NotasPersonales.Notas_Personales.Entities.Mappers.BaseMapper;
 import com.NotasPersonales.Notas_Personales.Repositories.BaseRepository;
 import com.NotasPersonales.Notas_Personales.Services.InterfacesServicios.BaseService;
@@ -30,27 +31,35 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, R
 
     protected E buscarEntidadPorPublicId (UUID publicId){
         return baseRepository.findByPublicId(publicId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT, "No encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado"));
     }
 
 // -----------------------------------------------------------------------------------------------------
 
-    protected Boolean filtroEstado (String estado){
-        return switch (estado.toLowerCase()) {
-            case "activos" -> false;
-            case "eliminados" -> true;
-            default -> null;
+    protected Boolean filtroEstado (Estado estado){
+        return switch (estado) {
+            case ACTIVOS -> false;
+            case ELIMINADO -> true;
+            case TODOS -> null;
+            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Estado Invalido");
         };
     }
 
-    @Override
-    public List<RespuestaDTO> listarTodos() {
+    private List<RespuestaDTO> listarTodos() {
         return mapear(baseRepository.findAll());
     }
 
-    @Override
-    public List<RespuestaDTO> listarPorEstado(Boolean eliminado) {
+    private List<RespuestaDTO> listarPorEstado(Boolean eliminado) {
         return mapear(baseRepository.findByEliminadoOrderByIdAsc(eliminado));
+    }
+
+    @Override
+    public List<RespuestaDTO> filtrarPorEstado(Estado estadoSolicitado) {
+        if (filtroEstado(estadoSolicitado) == null){
+            return listarTodos();
+        }else{
+            return listarPorEstado(filtroEstado(estadoSolicitado));
+        }
     }
 
 // -----------------------------------------------------------------------------------------------------
@@ -69,15 +78,17 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, R
 
     @Override
     @Transactional
-    public void eliminar(UUID publicID) {
+    public RespuestaDTO eliminar(UUID publicID) {
         E entidad = buscarEntidadPorPublicId(publicID);
         RespuestaDTO dto = baseMapper.entityToDTO(entidad);
         baseRepository.delete(entidad);
+        return dto;
     }
 
     @Override
-    public void reactivar(UUID publicID) {
+    public RespuestaDTO reactivar(UUID publicID) {
         E entidad = buscarEntidadPorPublicId(publicID);
         entidad.setEliminado(false);
+        return baseMapper.entityToDTO(baseRepository.save(entidad));
     }
 }

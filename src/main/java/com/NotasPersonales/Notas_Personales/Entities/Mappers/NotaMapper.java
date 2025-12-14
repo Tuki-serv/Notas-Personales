@@ -4,7 +4,9 @@ import com.NotasPersonales.Notas_Personales.Entities.DTOs.NotaDTOs.NotaPostDTO;
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.NotaDTOs.NotaRespuestaDTO;
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.NotaDTOs.NotaUpdateDTO;
 import com.NotasPersonales.Notas_Personales.Entities.Nota;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NotaMapper implements BaseMapper <Nota, NotaPostDTO, NotaUpdateDTO, NotaRespuestaDTO>{
 
     @Override
@@ -17,7 +19,7 @@ public class NotaMapper implements BaseMapper <Nota, NotaPostDTO, NotaUpdateDTO,
 
     @Override
     public NotaRespuestaDTO entityToDTO(Nota nota) {
-        return new NotaRespuestaDTO(nota.getPublicId(), nota.getTitulo(), nota.getContenido(), nota.getFechaCreacion(), nota.getFechaUltimaModificacion());
+        return new NotaRespuestaDTO(nota.getPublicId(), nota.getTitulo(), nota.getContenido(), nota.getCuaderno().getPublicId(), nota.getFechaCreacion(), nota.getFechaUltimaModificacion());
     }
 
     @Override
