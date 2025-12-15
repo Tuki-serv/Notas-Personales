@@ -8,6 +8,7 @@ import com.NotasPersonales.Notas_Personales.Services.InterfacesServicios.BaseSer
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, R
     }
 
     private List<RespuestaDTO> listarTodos() {
-        return mapear(baseRepository.findAll());
+        return mapear(baseRepository.findAllByOrderByIdAsc());
     }
 
     private List<RespuestaDTO> listarPorEstado(Boolean eliminado) {
@@ -64,31 +65,30 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, R
 
 // -----------------------------------------------------------------------------------------------------
 
-    @Override
-    public RespuestaDTO crear(PostDTO dto) {
+
+    protected RespuestaDTO crear(PostDTO dto) {
         E entidad = baseMapper.dtoToEntity(dto);
         return baseMapper.entityToDTO(baseRepository.save(entidad));
     }
 
-    @Override
-    public RespuestaDTO editar(E entidad,UpdateDTO dto) {
+    protected RespuestaDTO editar(E entidad,UpdateDTO dto) {
         baseMapper.actulizarEntidad(entidad,dto);
         return baseMapper.entityToDTO(baseRepository.save(entidad));
     }
 
     @Override
     @Transactional
-    public RespuestaDTO eliminar(UUID publicID) {
+    public ResponseEntity<RespuestaDTO> eliminar(UUID publicID) {
         E entidad = buscarEntidadPorPublicId(publicID);
         RespuestaDTO dto = baseMapper.entityToDTO(entidad);
         baseRepository.delete(entidad);
-        return dto;
+        return ResponseEntity.ok(dto);
     }
 
     @Override
-    public RespuestaDTO reactivar(UUID publicID) {
+    public ResponseEntity<RespuestaDTO> reactivar(UUID publicID) {
         E entidad = buscarEntidadPorPublicId(publicID);
         entidad.setEliminado(false);
-        return baseMapper.entityToDTO(baseRepository.save(entidad));
+        return ResponseEntity.ok(baseMapper.entityToDTO(baseRepository.save(entidad)));
     }
 }

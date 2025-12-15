@@ -31,11 +31,11 @@ public class CuadernoServiceIMP extends BaseServiceIMP <Cuaderno, CuadernoPostDT
     public List<CuadernoRespuestaDTO> filtrarPorUsuario(UUID usuarioPublicId, Estado estadoSolicitado) {
         Boolean estado = filtroEstado(estadoSolicitado);
 
-        if (estado == null){
-            return mapear(cuadernoRepository.findByUsuario_PublicIdOrderByIdAsc(usuarioPublicId));
-        }else{
-            return mapear(cuadernoRepository.findByUsuario_PublicIdAndEliminadoOrderByIdAsc(usuarioPublicId,estado));
-        }
+        return mapear(
+                (estado == null)
+                ? cuadernoRepository.findByUsuario_PublicIdOrderByIdAsc(usuarioPublicId)
+                        : cuadernoRepository.findByUsuario_PublicIdAndEliminadoOrderByIdAsc(usuarioPublicId,estado)
+        );
     }
 
     @Override

@@ -30,11 +30,11 @@ public class NotaServiceIMP extends BaseServiceIMP <Nota, NotaPostDTO, NotaUpdat
     public List<NotaRespuestaDTO> filtraPorCuaderno(UUID cuadernoPublicId, Estado estadoSolicitado) {
         Boolean estado = filtroEstado(estadoSolicitado);
 
-        if (estado == null){
-            return mapear(notaRepository.findByCuaderno_PublicIdOrderByIdAsc(cuadernoPublicId));
-        }else {
-            return mapear(notaRepository.findByCuaderno_PublicIdAndEliminadoOrderByIdAsc(cuadernoPublicId,estado));
-        }
+        return mapear(
+                (estado == null)
+                ? notaRepository.findByCuaderno_PublicIdOrderByIdAsc(cuadernoPublicId)
+                        : notaRepository.findByCuaderno_PublicIdAndEliminadoOrderByIdAsc(cuadernoPublicId,estado)
+        );
     }
 
     @Override
