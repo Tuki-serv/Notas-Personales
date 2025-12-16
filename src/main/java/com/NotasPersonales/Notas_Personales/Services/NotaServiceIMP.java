@@ -50,9 +50,10 @@ public class NotaServiceIMP extends BaseServiceIMP <Nota, NotaPostDTO, NotaUpdat
 
     @Override
     public ResponseEntity<NotaRespuestaDTO> registrar(NotaPostDTO dto) {
-        boolean existe = notaRepository.findByCuaderno_PublicIdAndTituloIgnoreCase(dto.cuadernoID(), dto.titulo()).isPresent();
-
-        if (existe) throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una nota con ese nombre");
+        notaRepository.findByCuaderno_PublicIdAndTituloIgnoreCase(dto.cuadernoID(), dto.titulo())
+                .ifPresent(present -> {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una nota con ese nombre");
+                });
 
         return ResponseEntity.status(HttpStatus.CREATED).body(crear(dto));
     }

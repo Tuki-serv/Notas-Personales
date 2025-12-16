@@ -50,9 +50,10 @@ public class CuadernoServiceIMP extends BaseServiceIMP <Cuaderno, CuadernoPostDT
 
     @Override
     public ResponseEntity<CuadernoRespuestaDTO> registrar(CuadernoPostDTO dto) {
-        boolean existe = cuadernoRepository.findByUsuario_PublicIdAndNombreIgnoreCase(dto.usuarioID(),dto.nombre()).isPresent();
-
-        if (existe) throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe un cuaderno con ese nombre");
+        cuadernoRepository.findByUsuario_PublicIdAndNombreIgnoreCase(dto.usuarioID(),dto.nombre())
+                .ifPresent(present -> {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe un cuaderno con ese nombre");
+                });
 
         return ResponseEntity.status(HttpStatus.CREATED).body(crear(dto));
     }

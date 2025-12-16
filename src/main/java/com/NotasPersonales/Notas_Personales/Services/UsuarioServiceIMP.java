@@ -25,9 +25,10 @@ public class UsuarioServiceIMP extends BaseServiceIMP <Usuario, UsuarioPostDTO, 
 
     @Override
     public ResponseEntity<UsuarioRespuestaDTO> registrarUsuario(UsuarioPostDTO dto) {
-        boolean existe = usuarioRepository.findByEmail(dto.email()).isPresent();
-
-        if (existe) throw new ResponseStatusException(HttpStatus.CONFLICT, "Email ya registrado");
+        usuarioRepository.findByEmail(dto.email())
+                .ifPresent(present -> {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email ya registrado");
+        });
 
         return ResponseEntity.status(HttpStatus.CREATED).body(super.crear(dto));
     }

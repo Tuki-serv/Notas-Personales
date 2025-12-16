@@ -56,11 +56,11 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, R
 
     @Override
     public List<RespuestaDTO> filtrarPorEstado(Estado estadoSolicitado) {
-        if (filtroEstado(estadoSolicitado) == null){
-            return listarTodos();
-        }else{
-            return listarPorEstado(filtroEstado(estadoSolicitado));
-        }
+        Boolean estado = filtroEstado(estadoSolicitado);
+
+        return (estado == null)
+                ? listarTodos()
+                : listarPorEstado(estado);
     }
 
 // -----------------------------------------------------------------------------------------------------

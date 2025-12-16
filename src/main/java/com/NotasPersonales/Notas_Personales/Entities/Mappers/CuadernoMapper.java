@@ -23,12 +23,9 @@ public class CuadernoMapper implements BaseMapper <Cuaderno, CuadernoPostDTO, Cu
 
     @Override
     public void actualizarEntidad(Cuaderno cuaderno, CuadernoUpdateDTO dto) {
-        if(dto.nombre() != null && !dto.nombre().isBlank() && !dto.nombre().equals(cuaderno.getNombre())){
-            cuaderno.setNombre(dto.nombre());
-        }
 
-        if(dto.descripcion() != null && !dto.descripcion().isBlank() && !dto.descripcion().equals(cuaderno.getDescripcion())){
-            cuaderno.setDescripcion(dto.descripcion());
-        }
+        aplicarSiValido(dto.nombre(),dto.nombre(),cuaderno::setNombre);
+
+        aplicarSiValido(dto.descripcion(),dto.descripcion(),cuaderno::setDescripcion);
     }
 }

@@ -24,12 +24,9 @@ public class NotaMapper implements BaseMapper <Nota, NotaPostDTO, NotaUpdateDTO,
 
     @Override
     public void actualizarEntidad(Nota nota, NotaUpdateDTO dto) {
-        if (dto.titulo() != null && !dto.titulo().isBlank() && !dto.titulo().equals(nota.getTitulo())){
-            nota.setTitulo(dto.titulo());
-        }
 
-        if (dto.contenido() != null && !dto.contenido().isBlank() && !dto.contenido().equals(nota.getContenido())){
-            nota.setContenido(dto.contenido());
-        }
+        aplicarSiValido(dto.titulo(),dto.titulo(),nota::setTitulo);
+
+        aplicarSiValido(dto.contenido(),dto.contenido(),nota::setContenido);
     }
 }

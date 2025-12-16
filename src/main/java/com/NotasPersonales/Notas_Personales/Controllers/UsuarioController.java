@@ -1,5 +1,6 @@
 package com.NotasPersonales.Notas_Personales.Controllers;
 
+import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioLoginDTO;
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioPostDTO;
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioRespuestaDTO;
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.UsuarioDTOs.UsuarioUpdateDTO;
@@ -28,6 +29,11 @@ public class UsuarioController {
     @PostMapping("/create")
     public ResponseEntity<UsuarioRespuestaDTO> create(@Valid @RequestBody UsuarioPostDTO dto){
         return usuarioService.registrarUsuario(dto);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioRespuestaDTO> login(@Valid @RequestBody UsuarioLoginDTO dto){
+        return usuarioService.login(dto);
     }
 
     @PutMapping("/{id}")
