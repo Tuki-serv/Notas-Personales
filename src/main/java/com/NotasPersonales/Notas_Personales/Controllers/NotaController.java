@@ -36,7 +36,7 @@ public class NotaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NotaRespuestaDTO> update (@PathVariable UUID id, @Valid @RequestParam NotaUpdateDTO dto){
+    public ResponseEntity<NotaRespuestaDTO> update (@PathVariable UUID id, @Valid @RequestBody NotaUpdateDTO dto){
         return notaService.actualizar(id,dto);
     }
 

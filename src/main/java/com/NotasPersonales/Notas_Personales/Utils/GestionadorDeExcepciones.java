@@ -39,7 +39,7 @@ public class GestionadorDeExcepciones {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorDTO> mejarValidacion(MethodArgumentNotValidException exception){
+    public ResponseEntity<ErrorDTO> manejarValidacion(MethodArgumentNotValidException exception){
         String mensaje = exception.getBindingResult().getFieldErrors().stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .findFirst()

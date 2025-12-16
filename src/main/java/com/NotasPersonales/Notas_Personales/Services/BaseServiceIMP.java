@@ -72,7 +72,7 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, R
     }
 
     protected RespuestaDTO editar(E entidad,UpdateDTO dto) {
-        baseMapper.actulizarEntidad(entidad,dto);
+        baseMapper.actualizarEntidad(entidad,dto);
         return baseMapper.entityToDTO(baseRepository.save(entidad));
     }
 

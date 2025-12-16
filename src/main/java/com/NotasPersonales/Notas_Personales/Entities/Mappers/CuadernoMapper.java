@@ -22,7 +22,7 @@ public class CuadernoMapper implements BaseMapper <Cuaderno, CuadernoPostDTO, Cu
     }
 
     @Override
-    public void actulizarEntidad(Cuaderno cuaderno, CuadernoUpdateDTO dto) {
+    public void actualizarEntidad(Cuaderno cuaderno, CuadernoUpdateDTO dto) {
         if(dto.nombre() != null && !dto.nombre().isBlank() && !dto.nombre().equals(cuaderno.getNombre())){
             cuaderno.setNombre(dto.nombre());
         }

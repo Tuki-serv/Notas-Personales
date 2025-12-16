@@ -17,6 +17,6 @@ public interface BaseRepository <E extends BaseEntity> extends JpaRepository<E, 
 
     List<E> findAllByOrderByIdAsc();
 
-    List<E> findByEliminadoOrderByIdAsc (Boolean elminado);
+    List<E> findByEliminadoOrderByIdAsc (Boolean eliminado);
 
 }

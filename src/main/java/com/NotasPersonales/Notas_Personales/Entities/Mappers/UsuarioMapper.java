@@ -24,7 +24,7 @@ public class UsuarioMapper implements BaseMapper <Usuario, UsuarioPostDTO, Usuar
     }
 
     @Override
-    public void actulizarEntidad(Usuario usuario, UsuarioUpdateDTO dto) {
+    public void actualizarEntidad(Usuario usuario, UsuarioUpdateDTO dto) {
         if (dto.nombre() != null && !dto.nombre().isBlank() && !dto.nombre().equals(usuario.getNombre())){
             usuario.setNombre(dto.nombre());
         }

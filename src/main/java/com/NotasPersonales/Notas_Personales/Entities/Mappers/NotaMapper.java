@@ -23,7 +23,7 @@ public class NotaMapper implements BaseMapper <Nota, NotaPostDTO, NotaUpdateDTO,
     }
 
     @Override
-    public void actulizarEntidad(Nota nota, NotaUpdateDTO dto) {
+    public void actualizarEntidad(Nota nota, NotaUpdateDTO dto) {
         if (dto.titulo() != null && !dto.titulo().isBlank() && !dto.titulo().equals(nota.getTitulo())){
             nota.setTitulo(dto.titulo());
         }
