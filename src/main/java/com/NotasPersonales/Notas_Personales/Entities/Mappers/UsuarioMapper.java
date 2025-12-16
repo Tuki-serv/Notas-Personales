@@ -26,9 +26,9 @@ public class UsuarioMapper implements BaseMapper <Usuario, UsuarioPostDTO, Usuar
     @Override
     public void actualizarEntidad(Usuario usuario, UsuarioUpdateDTO dto) {
 
-        aplicarSiValido(dto.nombre(),dto.nombre(),usuario::setNombre);
+        aplicarSiValido(dto.nombre(),usuario.getNombre(),usuario::setNombre);
 
-        aplicarSiValido(dto.email(),dto.email(),usuario::setEmail);
+        aplicarSiValido(dto.email(),usuario.getEmail(),usuario::setEmail);
 
         if (dto.password() != null && !dto.password().isBlank()){
             String passwordHash = PasswordHasher.hash(dto.password());
