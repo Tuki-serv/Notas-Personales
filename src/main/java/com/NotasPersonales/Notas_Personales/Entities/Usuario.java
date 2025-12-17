@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @SQLDelete(sql = "UPDATE usuario SET eliminado = true WHERE id = ? AND version = ?")
-@SQLRestriction("eliminado = false")
+//@SQLRestriction("eliminado = false")
 public class Usuario extends BaseEntity{
     private String nombre;
     private String email;

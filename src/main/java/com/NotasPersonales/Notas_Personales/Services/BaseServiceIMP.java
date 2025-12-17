@@ -48,7 +48,7 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO ex
 
     protected Boolean filtroEstado (Estado estado){
         return switch (estado) {
-            case ACTIVOS -> false;
+            case ACTIVO -> false;
             case ELIMINADO -> true;
             case TODOS -> null;
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Estado Invalido");

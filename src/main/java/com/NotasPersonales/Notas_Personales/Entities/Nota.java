@@ -16,7 +16,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Getter
 @Setter
 @SQLDelete(sql = "UPDATE nota SET eliminado = true WHERE id = ? AND version = ?")
-@SQLRestriction("eliminado = false")
+//@SQLRestriction("eliminado = false")
 public class Nota extends BaseEntity{
     private String titulo;
     @Lob

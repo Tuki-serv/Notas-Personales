@@ -38,6 +38,10 @@ public class UsuarioServiceIMP extends BaseServiceIMP <Usuario, UsuarioPostDTO, 
         Usuario usuario = usuarioRepository.findByEmail(dto.email())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Email no registrado"));
 
+        if (usuario.getEliminado()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Su cuenta ha sido eliminada. Contacte con el soporte para reactivarla");
+        }
+
         if (!usuario.getPassword().equals(PasswordHasher.hash(dto.password()))){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales Invalidas");
         }
