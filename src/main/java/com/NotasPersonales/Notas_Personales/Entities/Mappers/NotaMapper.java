@@ -19,7 +19,7 @@ public class NotaMapper implements BaseMapper <Nota, NotaPostDTO, NotaUpdateDTO,
 
     @Override
     public NotaRespuestaDTO entityToDTO(Nota nota) {
-        return new NotaRespuestaDTO(nota.getPublicId(), nota.getTitulo(), nota.getContenido(), nota.getCuaderno().getPublicId(), nota.getFechaCreacion(), nota.getFechaUltimaModificacion());
+        return new NotaRespuestaDTO(nota.getPublicId(), nota.getTitulo(), nota.getContenido(), nota.getCuaderno().getPublicId(), nota.getVersion(), nota.getFechaCreacion(), nota.getFechaUltimaModificacion());
     }
 
     @Override

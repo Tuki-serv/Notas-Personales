@@ -20,7 +20,7 @@ public class UsuarioMapper implements BaseMapper <Usuario, UsuarioPostDTO, Usuar
 
     @Override
     public UsuarioRespuestaDTO entityToDTO(Usuario usuario) {
-        return new UsuarioRespuestaDTO(usuario.getPublicId(),usuario.getNombre(),usuario.getEmail(),usuario.getFechaCreacion(),usuario.getFechaUltimaModificacion());
+        return new UsuarioRespuestaDTO(usuario.getPublicId(),usuario.getNombre(),usuario.getEmail(), usuario.getVersion(),usuario.getFechaCreacion(),usuario.getFechaUltimaModificacion());
     }
 
     @Override
