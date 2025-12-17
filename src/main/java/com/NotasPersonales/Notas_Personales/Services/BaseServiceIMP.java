@@ -1,6 +1,7 @@
 package com.NotasPersonales.Notas_Personales.Services;
 
 import com.NotasPersonales.Notas_Personales.Entities.BaseEntity;
+import com.NotasPersonales.Notas_Personales.Entities.DTOs.VersionableDTO;
 import com.NotasPersonales.Notas_Personales.Entities.Enums.Estado;
 import com.NotasPersonales.Notas_Personales.Entities.Mappers.BaseMapper;
 import com.NotasPersonales.Notas_Personales.Repositories.BaseRepository;
@@ -9,12 +10,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
 
-public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, RespuestaDTO> implements BaseService<E,PostDTO, UpdateDTO, RespuestaDTO> {
+public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO extends VersionableDTO, RespuestaDTO> implements BaseService<E,PostDTO, UpdateDTO, RespuestaDTO> {
 
     @Autowired
     BaseRepository<E> baseRepository;
@@ -33,6 +35,13 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, R
     protected E buscarEntidadPorPublicId (UUID publicId){
         return baseRepository.findByPublicId(publicId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No encontrado"));
+    }
+
+    protected void validarVersion (E entidad, UpdateDTO dto){
+        if (dto.version() != null && !dto.version().equals(entidad.getVersion())){
+            throw new ObjectOptimisticLockingFailureException(entidad.getClass(),
+                    entidad.getId().toString());
+        }
     }
 
 // -----------------------------------------------------------------------------------------------------
@@ -72,6 +81,7 @@ public abstract class BaseServiceIMP <E extends BaseEntity,PostDTO, UpdateDTO, R
     }
 
     protected RespuestaDTO editar(E entidad,UpdateDTO dto) {
+        validarVersion(entidad,dto);
         baseMapper.actualizarEntidad(entidad,dto);
         return baseMapper.entityToDTO(baseRepository.save(entidad));
     }

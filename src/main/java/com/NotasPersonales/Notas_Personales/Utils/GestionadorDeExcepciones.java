@@ -1,16 +1,14 @@
 package com.NotasPersonales.Notas_Personales.Utils;
 
 import com.NotasPersonales.Notas_Personales.Entities.DTOs.ErrorDTO;
-import com.NotasPersonales.Notas_Personales.Entities.Enums.Estado;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
-import java.util.List;
 
 @RestControllerAdvice
 public class GestionadorDeExcepciones {
@@ -21,6 +19,14 @@ public class GestionadorDeExcepciones {
         ErrorDTO error = new ErrorDTO(exception.getReason(),exception.getStatusCode().value());
 
         return ResponseEntity.status(exception.getStatusCode()).body(error);
+    }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity<ErrorDTO> manejarConflictoDeVersion(ObjectOptimisticLockingFailureException exception){
+        return ResponseEntity.status(409).body(new ErrorDTO(
+                "El registro fue modificado o eliminado por otro usuario mientras usted lo editaba. Por favor, recargue la página e intente de nuevo.",
+                409
+        ));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

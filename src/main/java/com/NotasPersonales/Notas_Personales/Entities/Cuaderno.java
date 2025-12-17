@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE cuaderno SET eliminado = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE cuaderno SET eliminado = true WHERE id = ? AND version = ?")
 @SQLRestriction("eliminado = false")
 public class Cuaderno extends BaseEntity{
     private String nombre;

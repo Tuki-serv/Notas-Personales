@@ -8,6 +8,7 @@ public record CuadernoRespuestaDTO(
         String nombre,
         String descripcion,
         UUID usuarioId,
+        Long version,
         LocalDateTime fechaCreacion,
         LocalDateTime fechaUltimaModificacion
 ) {

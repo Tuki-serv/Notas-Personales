@@ -7,6 +7,7 @@ public record UsuarioRespuestaDTO(
         UUID id,
         String nombre,
         String email,
+        Long version,
         LocalDateTime fechaCreacion,
         LocalDateTime fechaUltimaModificacion
 ) {
