@@ -31,7 +31,7 @@ public class NotaController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<NotaRespuestaDTO> create (NotaPostDTO dto){
+    public ResponseEntity<NotaRespuestaDTO> create (@Valid @RequestBody NotaPostDTO dto){
         return notaService.registrar(dto);
     }
 
