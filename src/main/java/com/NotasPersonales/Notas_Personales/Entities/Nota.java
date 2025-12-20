@@ -19,7 +19,7 @@ import org.hibernate.annotations.SQLRestriction;
 //@SQLRestriction("eliminado = false")
 public class Nota extends BaseEntity{
     private String titulo;
-    @Lob
+
     @Column(columnDefinition = "TEXT")
     private String contenido;
 

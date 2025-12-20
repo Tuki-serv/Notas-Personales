@@ -69,4 +69,17 @@ public class CuadernoServiceIMP extends BaseServiceIMP <Cuaderno, CuadernoPostDT
 
         return ResponseEntity.ok(super.editar(cuaderno,dto));
     }
+
+    @Override
+    public ResponseEntity<CuadernoRespuestaDTO> reactivar(UUID publicID) {
+        Cuaderno cuaderno = buscarEntidadPorPublicId(publicID);
+
+        if (cuaderno.getUsuario().getEliminado()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "No se puede reactivar el cuaderno por el usuario contenedor está eliminado");
+        }
+
+        cuaderno.setEliminado(false);
+        return ResponseEntity.ok(baseMapper.entityToDTO(baseRepository.save(cuaderno)));
+    }
 }

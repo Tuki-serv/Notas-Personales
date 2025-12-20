@@ -70,4 +70,17 @@ public class NotaServiceIMP extends BaseServiceIMP <Nota, NotaPostDTO, NotaUpdat
 
         return ResponseEntity.ok(editar(nota,dto));
     }
+
+    @Override
+    public ResponseEntity<NotaRespuestaDTO> reactivar(UUID publicID) {
+        Nota nota = buscarEntidadPorPublicId(publicID);
+
+        if (nota.getCuaderno().getEliminado()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "No se puede reactivar el cuaderno por el usuario contenedor está eliminado");
+        }
+
+        nota.setEliminado(false);
+        return ResponseEntity.ok(baseMapper.entityToDTO(baseRepository.save(nota)));
+    }
 }
