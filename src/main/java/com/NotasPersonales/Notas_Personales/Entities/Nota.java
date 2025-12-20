@@ -1,10 +1,6 @@
 package com.NotasPersonales.Notas_Personales.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -20,8 +16,10 @@ import org.hibernate.annotations.SQLRestriction;
 public class Nota extends BaseEntity{
     private String titulo;
 
-    @Column(columnDefinition = "TEXT")
-    private String contenido;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contenido_id")
+    @Builder.Default
+    private ContenidoNota contenido = new ContenidoNota("");
 
     @ManyToOne
     @JoinColumn(name = "cuaderno_id", nullable = false)

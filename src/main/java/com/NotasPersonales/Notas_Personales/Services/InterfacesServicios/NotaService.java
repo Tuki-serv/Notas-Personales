@@ -1,8 +1,8 @@
 package com.NotasPersonales.Notas_Personales.Services.InterfacesServicios;
 
-import com.NotasPersonales.Notas_Personales.Entities.DTOs.NotaDTOs.NotaPostDTO;
-import com.NotasPersonales.Notas_Personales.Entities.DTOs.NotaDTOs.NotaRespuestaDTO;
-import com.NotasPersonales.Notas_Personales.Entities.DTOs.NotaDTOs.NotaUpdateDTO;
+import com.NotasPersonales.Notas_Personales.Entities.DTOs.ContenidoNotaDTOs.ContenidoNotaRespuestaDTO;
+import com.NotasPersonales.Notas_Personales.Entities.DTOs.ContenidoNotaDTOs.ContenidoNotaUpdateDTO;
+import com.NotasPersonales.Notas_Personales.Entities.DTOs.NotaDTOs.*;
 import com.NotasPersonales.Notas_Personales.Entities.Enums.Estado;
 import com.NotasPersonales.Notas_Personales.Entities.Nota;
 import org.springframework.http.ResponseEntity;
@@ -14,4 +14,6 @@ public interface NotaService extends BaseService <Nota, NotaPostDTO, NotaUpdateD
     List<NotaRespuestaDTO> filtraPorCuaderno(UUID cuadernoPublicId, Estado estadoSolicitado);
     ResponseEntity<NotaRespuestaDTO> registrar (NotaPostDTO dto);
     ResponseEntity<NotaRespuestaDTO> actualizar (UUID publicId,NotaUpdateDTO dto);
+    ResponseEntity<ContenidoNotaRespuestaDTO> obtenerContenido (UUID publicId);
+    ResponseEntity<ContenidoNotaRespuestaDTO> actualizarContenido (UUID publicId, ContenidoNotaUpdateDTO dto);
 }

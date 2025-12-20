@@ -11,9 +11,6 @@ public record NotaPostDTO(
         @Size(min = 3, max = 20, message = "El nombre debe tener entre 3 y 20 caracteres")
         String titulo,
 
-        @Size(min = 1, message = "El nombre debe por lo menos tener 1 caracter")
-        String contenido,
-
         @NotNull(message = "Cada nota debe pertenecer a un cuaderno")
         UUID cuadernoID
 ) {
