@@ -32,7 +32,7 @@ public class NotaController {
         return notaService.filtraPorCuaderno(id,estado);
     }
 
-    @GetMapping("/id")
+    @GetMapping("/contenido/{id}")
     public ResponseEntity<ContenidoNotaRespuestaDTO> obtenerContenido (@PathVariable UUID id){
         return notaService.obtenerContenido(id);
     }
@@ -47,7 +47,7 @@ public class NotaController {
         return notaService.actualizar(id,dto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/contenido/{id}")
     public ResponseEntity<ContenidoNotaRespuestaDTO> actualizarContenido (@PathVariable UUID id, @Valid @RequestBody ContenidoNotaUpdateDTO dto){
         return notaService.actualizarContenido(id,dto);
     }
